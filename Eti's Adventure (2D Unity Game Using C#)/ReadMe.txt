@@ -19,6 +19,7 @@ Basic Introduction to the Functionality:
 9. Inventory system
 10. Checkpoint system with teleportation between different points
 11. Tutorial available
+12. Added more statistics and background music
 
 The primary objective of the game is to provide a fun experience to players while also focusing on learning outcomes.
 Majority of the reported bugs are fixed. Currently working on
