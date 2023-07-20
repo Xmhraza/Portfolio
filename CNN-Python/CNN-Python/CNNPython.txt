@@ -1,0 +1,42 @@
+#This block will be used to explain the model and the code in depth. Smaller comments will be made in the next block.
+
+#The first class called is the NET class which acts as the main class for the CNN. The class creates two attribute instances,
+#for a defined number of blocks (backbone) and the other is a classifier. The number of blocks are set to be 3
+
+#The BLOCK class consists of multiple convolutional layers and a single SpatialAveragePool layer (SpatialAveragePoolMLP class)
+#The number of convolutional layer are dependent on the current number of the block hence it dynamically increases e.g., the 
+#first jump will be from 3 - 8 and will increase by 2 based until the last block is executed
+
+
+#The SpatialAveragePoolMLP (SAPMLP) class is a module that performs a spatial average pooling followed by a linear layer and a 
+#ReLU activation hence satisfying the equation provided for a block. 
+#Specifically, it takes as input a tensor x of shape (batch_size, in_channels, H, W) and applies an 
+#adaptive average pooling operation to reduce the spatial dimensions of the tensor to (batch_size, in_channels, 1, 1). 
+#The resulting tensor is then flattened and fed into a linear layer with output dimension out_channels. The in_channel and 
+#out_channel increase with the block number. We will call the output tensor of the layer "a"
+
+#Tensor "a" is then used to weight each convolutional layer output tensor in the block class. 
+#Specifically, for each nn.Conv2d layer, a corresponding element in a is selected,
+#and reshaped to be a 4D tensor with shape (batch_size, 1, 1, 1).  This tensor is used to weight the output tensor of the 
+#nn.Conv2d layer element-wise. The weighted output tensors are then added together to produce a single output tensor that 
+#is returned.
+
+#The ExampleNet class adds more depth to the model by adding more convolutional layers and linear layers
+
+#The classifier class uses the same average pooling function in the SAPMLP class and applies a fully connected layer 
+#with num_classes output units. 
+#Finally, a LogSoftmax activation is applied on the output to obtain log-probabilities for each class.
+
+#The model provides this final tensor [batch_size, 10] for training and testing
+
+#The Cross Entropy Loss Criterian was used for the loss and the Stochastic Gradient Descent was used for optimization. 
+#The training and testing code is commented briefly within the main code as it is simialr to the lecture
+
+
+#NOTE : The cpu was used to train the model as cuda was affecting the loss and training negatively 
+#and the issue couldn't be fixed. I have commented the piece of code that switches from cpu to gpu. These commands can be
+#uncommented to switch from cpu to gpu however the model was not working efficiently so CPU is advised
+
+#NOTE : It may take upto 2 and a half hours if the number of epochs are 30.
+
+
